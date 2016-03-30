@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+.row li {
+  width: 33.3%;
+  float: left;
+}
+
+img {
+  border: 0 none;
+  display: inline-block;
+  height: auto;
+  max-width: 100%;
+  vertical-align: middle;
+  margin-bottom: 20px;
+}
+
+
+</style>
+<div class="container">
+  <a href="{% url 'users:profile-edit' %}">Edit Profile</a>
+  <div class="row">
+    <div class="col-md-3">
+      <img width="200px" src="{{user_photo}}">
+    </div>
+    <div class="col-md-3">
+      <p>{{user.first_name}} {{user.last_name}}</p>
+      <p>{{user.email}}</p>
+      <p>{{user.cell_phone}}</p>
+      {% for skill in skills %}
+        <p>{{skill}}</p>
+      {% endfor %}
+      <ul class="list-inline">
+      {% for obj in media %}
+        <li>
+          {% if obj.media_type == 1 %}
+          <img width="128px" height="128px" src="{{obj.media_url.url}}" class="inline-block">
+          {% else %}
+          <video src="{{obj.media_url.url}}"></video>
+          {% endif %}
+        </li>
+      {% endfor %}
+      </ul>
+      <form action="{% url 'users:profile-detail' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ media_form.non_field_errors }}
+        {{ media_form.as_p }}
+        <button class="btn btn-default" name="action" value="login">Upload</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

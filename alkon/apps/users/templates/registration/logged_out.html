@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block head %}
+{{ block.super }}
+<title>{% trans 'Logged out' %}</title>
+{% endblock head %}
+
+{% block content %}
+  <div style="text-align:center;">
+    {% if inactive_message %}
+    <ul class="errorlist nonfield">
+      <li>
+      {{inactive_message}}
+      <a href="{% url 'payment:renew-subscribe' %}"
+      </li>
+    </ul>
+    {% endif %}
+    {% trans 'You have been logged out' %} 
+  </div>
+{% endblock content %}

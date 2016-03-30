@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+<div style="max-width:300px; margin:0 auto;">
+  <p>
+    <form action="{% url 'users:user_login' %}" method="post">
+      {% csrf_token %}
+      <input type="hidden" name="next" value="{{ next }}" />
+      {{ form.non_field_errors }}
+      {% for field in form %}
+            <p>
+            {% if field.name == "username" %}
+              <label>Email or Username</label>
+            {% else %}
+              {{ field.label_tag }}
+            {% endif %}
+            
+            {{ field }}
+            {{ field.errors }}
+            </p>
+      {% endfor %}
+      <button class="btn btn-default" name="action" value="login">Login</button>
+      <input type="hidden" name="next" value="{{ next }}" />
+    </form>
+  </p>
+</div>
+{% endblock %}
